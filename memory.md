@@ -63,4 +63,6 @@ Use `/memory` to view, add, or remove entries from Claude's memory files:
 
 > **Best Practice:** Manually create a CLAUDE.md before starting any project. This single investment pays dividends on every future session — Claude arrives already knowing your conventions, eliminating repetitive context-setting.
 
+claude /init to initially (automatically) create the contents
+
 claude /memory to display the contents 
