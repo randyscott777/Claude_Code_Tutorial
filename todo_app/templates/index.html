@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — TodoList{% endblock %}
+
+{% block content %}
+<!-- Dashboard Stats -->
+<section class="dashboard">
+  <div class="stat-card">
+    <span class="stat-number">{{ total }}</span>
+    <span class="stat-label">Total</span>
+  </div>
+  <div class="stat-card active">
+    <span class="stat-number">{{ active }}</span>
+    <span class="stat-label">Active</span>
+  </div>
+  <div class="stat-card done">
+    <span class="stat-number">{{ done }}</span>
+    <span class="stat-label">Completed</span>
+  </div>
+  <div class="stat-card urgent">
+    <span class="stat-number">{{ high }}</span>
+    <span class="stat-label">High Priority</span>
+  </div>
+</section>
+
+<!-- Filters -->
+<section class="filters">
+  <div class="filter-group">
+    <span class="filter-label">Status:</span>
+    <a class="filter-btn {% if filter_status == 'all' %}active{% endif %}"
+       href="?status=all&priority={{ filter_priority }}">All</a>
+    <a class="filter-btn {% if filter_status == 'active' %}active{% endif %}"
+       href="?status=active&priority={{ filter_priority }}">Active</a>
+    <a class="filter-btn {% if filter_status == 'done' %}active{% endif %}"
+       href="?status=done&priority={{ filter_priority }}">Done</a>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Priority:</span>
+    <a class="filter-btn {% if filter_priority == 'all' %}active{% endif %}"
+       href="?status={{ filter_status }}&priority=all">All</a>
+    <a class="filter-btn priority-high {% if filter_priority == 'high' %}active{% endif %}"
+       href="?status={{ filter_status }}&priority=high">High</a>
+    <a class="filter-btn priority-medium {% if filter_priority == 'medium' %}active{% endif %}"
+       href="?status={{ filter_status }}&priority=medium">Medium</a>
+    <a class="filter-btn priority-low {% if filter_priority == 'low' %}active{% endif %}"
+       href="?status={{ filter_status }}&priority=low">Low</a>
+  </div>
+</section>
+
+<!-- Todo List -->
+<section class="todo-list">
+  {% if todos %}
+    {% for todo in todos %}
+    <div class="todo-card {% if todo['completed'] %}completed{% endif %} priority-border-{{ todo['priority'] }}">
+      <div class="todo-main">
+        <form action="{{ url_for('toggle', todo_id=todo['id']) }}" method="post" class="toggle-form">
+          <button type="submit" class="toggle-btn" title="Toggle complete">
+            {% if todo['completed'] %}&#10003;{% else %}&nbsp;{% endif %}
+          </button>
+        </form>
+        <div class="todo-body">
+          <div class="todo-title">{{ todo['title'] }}</div>
+          {% if todo['description'] %}
+            <div class="todo-desc">{{ todo['description'] }}</div>
+          {% endif %}
+          <div class="todo-meta">
+            <span class="badge badge-{{ todo['priority'] }}">{{ todo['priority'] }}</span>
+            {% if todo['due_date'] %}
+              <span class="due-date">Due: {{ todo['due_date'] }}</span>
+            {% endif %}
+            <span class="created-at">Added: {{ todo['created_at'][:10] }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="todo-actions">
+        <a class="btn btn-sm btn-edit" href="{{ url_for('edit', todo_id=todo['id']) }}">Edit</a>
+        <form action="{{ url_for('delete', todo_id=todo['id']) }}" method="post"
+              onsubmit="return confirm('Delete this todo?')">
+          <button type="submit" class="btn btn-sm btn-delete">Delete</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <p>No todos found. <a href="{{ url_for('add') }}">Add one!</a></p>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

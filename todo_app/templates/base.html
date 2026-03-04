@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Todo App{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1><a href="{{ url_for('index') }}">&#10003; TodoList</a></h1>
+      <a class="btn btn-primary" href="{{ url_for('add') }}">+ New Todo</a>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>Todo App &mdash; Flask + SQLite3</p>
+  </footer>
+</body>
+</html>

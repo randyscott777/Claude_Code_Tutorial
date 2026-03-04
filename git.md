@@ -196,5 +196,6 @@ With `gh` authenticated, Claude can interact with GitHub Issues:
 
 - **Stage files yourself** with `git add` before asking Claude to commit, or ask Claude to stage specific files by name
 - **Use `/diff` before `/commit`** to verify what's being committed
+- Allow push to update the remote repository
 - **Ask Claude to explain commits** from other contributors: *"Explain what commit abc123 does"*
 - **Claude reads PR comments** — paste a GitHub PR URL and ask *"What is this PR doing?"*

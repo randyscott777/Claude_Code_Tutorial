@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Add Todo — TodoList{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <h2>Add New Todo</h2>
+  <form action="{{ url_for('add') }}" method="post">
+    <div class="form-group">
+      <label for="title">Title <span class="required">*</span></label>
+      <input type="text" id="title" name="title" placeholder="What needs to be done?" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="3" placeholder="Optional details..."></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="priority">Priority</label>
+        <select id="priority" name="priority">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="due_date">Due Date</label>
+        <input type="date" id="due_date" name="due_date">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a class="btn btn-secondary" href="{{ url_for('index') }}">Cancel</a>
+      <button type="submit" class="btn btn-primary">Add Todo</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

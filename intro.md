@@ -16,23 +16,14 @@ Unlike chatbots where you copy-paste code back and forth, Claude Code works *ins
 - **Git Integration** — Commits, branches, diffs, pull requests, and history
 - **Multi-step Automation** — Chain complex workflows from one instruction
 
+### Features of Claude Code
+* Setup - in settings.json file for permissions, ?, ?, etc
+* Commands - the various Claude Code commands, switches, and keyboard shortcuts
+* Memory - cross session in CLAUDE.md file, create via claude /init
+* MCP servers - Google Calendar, Gmail, filesystem
+* Skills - Predefined skills for explain-code and create-todo-list
+* Hooks - ?
+* Git - for version control and commitment 
+* Cost - tokens used and balances
 
-### Claude Code Version
 
-claude --version (from the command line it displays the version of Claude Code)
-
-
-### Claude Code Prompt
-
-Prompts can be anything with double quotes, for example:
-- claude /doctor
-- claude --version will display the version in 1.2.3 format
-- claude "What does this project do?"
-- claude -p "prompt" switch executes the prompt and returns to the command line
-- claude -c switch continues the current conversation
-- claude -r switch continues the previous conversation
-- claude /help will display a link to Claude Code website for the options
-- claude /model modelname' will use the model specified or blank for the picker
-Note: use opus for planning and then sonnet for building
-- claude /clear will clear the current conversation
-- claude /exit will end claude code agent and return to the command line

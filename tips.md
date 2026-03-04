@@ -2,7 +2,7 @@ After extensive use, certain patterns consistently produce better results with C
 
 ## 1. Set Up CLAUDE.md Before Starting
 
-Create a CLAUDE.md file before writing a single line of code. This one-time investment pays dividends on every future session — Claude arrives knowing your stack, conventions, and rules.
+Create a CLAUDE.md file (via /init) before writing a single line of code. This one-time investment pays dividends on every future session — Claude arrives knowing your stack, conventions, and rules.
 
 ## 2. Be Specific, Not Vague
 

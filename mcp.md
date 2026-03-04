@@ -39,6 +39,8 @@ claude mcp add github npx -y @modelcontextprotocol/server-github
 }
 ```
 
+> **Security Note:** MCP servers can have significant system access. Only install servers from trusted sources, and review the permissions they request before adding them to your configuration.
+
 ## Popular MCP Servers
 
 | Server | Capability |
@@ -54,8 +56,12 @@ claude mcp add github npx -y @modelcontextprotocol/server-github
 
 ```bash
 claude mcp list              # List all configured servers
-claude mcp remove github     # Remove a server
-claude mcp status            # Check server health and connectivity
-```
+(shows Google Calendar and Gmail - both needing authentication)
 
-> **Security Note:** MCP servers can have significant system access. Only install servers from trusted sources, and review the permissions they request before adding them to your configuration.
+claude mcp add filesystem npx -y @modelcontextprotocol/server-filesystem   
+(this updates the /users/randy/.claude,json file)
+
+claude mcp remove filesystem     # Remove the specified server
+
+claude mcp status            # unknow ????? Check server health and connectivity
+```

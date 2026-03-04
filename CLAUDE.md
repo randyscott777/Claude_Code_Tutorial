@@ -23,7 +23,7 @@ Each markdown file covers a distinct Claude Code topic:
 | `intro.md` | What Claude Code is and its core capabilities |
 | `setup.md` | Installation, authentication, and config file locations |
 | `commands.md` | Slash commands reference (`/commit`, `/plan`, `/review`, etc.) |
-| `memory.md` | CLAUDE.md purpose, `/memory` command, memory file hierarchy |
+| `memory.md` | CLAUDE.md purpose,'/init' and `/memory` command, memory file hierarchy |
 | `hooks.md` | Hook events (PreToolUse, PostToolUse, Stop) and configuration patterns |
 | `mcp.md` | MCP servers — adding, configuring, and managing external tool integrations |
 | `skills.md` | Available skills (`keybindings-help`, `simplify`, `claude-developer-platform`) |
