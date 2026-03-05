@@ -7,22 +7,22 @@ os.system('cls' if os.name == 'nt' else 'clear')
 console = Console()
 
 def show(filename):
-    with open(filename) as f:
+    with open(filename, encoding="utf-8") as f:
         console.print(Markdown(f.read()))
 
 print("--- MAIN MENU FOR CLAUDE CODE ---")
-print("1. introduction and overview")
-print("2. setup and configure settings.json file ***WIP***")
-print("3. commands by category and commonly used")
-print("4. memory (cross session via CLAUDE.md)")
-print("5. mcp servers for Google calendar, Gmail, and ***WIP***")
-print("6. skills currently has explain-code and create-todo-list")
-print("7. hooks ***TBD***")
-print("8. git for version control and backup")
-print("9. tips")
-print("10. subagents TBD")
-print("11. todos and markdown commands")
-print("12. cost - token usage and balances")
+print("1. Introduction and overview")
+print("2. Setup and configure settings.json file")
+print("3. Commands by category and commonly used")
+print("4. Memory (cross session via CLAUDE.md)")
+print("5. MCP servers for Google calendar, Gmail, and Github")
+print("6. Skills for explain-code and create-todo-list")
+print("7. Hook for Claude stop notifications")
+print("8. Github for version control and backup")
+print("9. Tips")
+print("10. Subagents ***TBD***")
+print("11. Todos for future development and markdown commands")
+print("12. Costs - token usage and balances")
 
 opt = input("Enter the number of the file you want to read: ")
 

@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT_HERE"
+      }
+    }
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -Command \"Add-Type -AssemblyName System.Windows.Forms; \\$n = New-Object System.Windows.Forms.NotifyIcon; \\$n.Icon = [System.Drawing.SystemIcons]::Information; \\$n.Visible = \\$true; \\$n.ShowBalloonTip(3000, 'Claude Done', 'Claude has finished!', 'Info'); Start-Sleep -Seconds 4; \\$n.Dispose()\""
+          }
+        ]
+      }
+    ]
+  }
+}
