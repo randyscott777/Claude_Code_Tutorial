@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Claude Code local settings (may contain secrets)
+.claude/settings.local.json
+
+# SQLite databases
+*.db
+
+# OAuth / credential files
+credentials.json
+token.json
+*.pem
+*.key
+
+# Kivy / buildozer artifacts
+.buildozer/
+bin/
