@@ -1,0 +1,158 @@
+#:import dp kivy.metrics.dp
+
+
+<TaskFormScreen>:
+    name: "task_form"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # Top bar — back arrow on left, save checkmark on right
+        MDTopAppBar:
+            id: toolbar
+            title: "Add Task"
+            elevation: 2
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+            right_action_items: [["check", lambda x: root.save()]]
+
+        ScrollView:
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: [dp(16), dp(20), dp(16), dp(32)]
+                spacing: dp(20)
+
+                # --------------------------------------------------------
+                # Title (required)
+                # --------------------------------------------------------
+                MDTextField:
+                    id: title_field
+                    hint_text: "Task title *"
+                    mode: "rectangle"
+
+                # --------------------------------------------------------
+                # Due date
+                # --------------------------------------------------------
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: dp(56)
+                    spacing: dp(8)
+
+                    MDTextField:
+                        id: due_date_field
+                        hint_text: "Due date (tap to set)"
+                        text: root._due_date
+                        readonly: True
+                        mode: "rectangle"
+                        icon_right: "calendar"
+                        on_focus: if self.focus: root.show_date_picker()
+
+                    MDIconButton:
+                        icon: "close-circle-outline"
+                        pos_hint: {"center_y": 0.5}
+                        theme_icon_color: "Hint"
+                        on_release: root.clear_date()
+
+                # --------------------------------------------------------
+                # Priority chips
+                # --------------------------------------------------------
+                MDLabel:
+                    text: "Priority"
+                    theme_text_color: "Hint"
+                    font_style: "Caption"
+                    size_hint_y: None
+                    height: dp(18)
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: dp(40)
+                    spacing: dp(8)
+
+                    MDChip:
+                        text: "Low"
+                        type: "choice"
+                        active: root._priority == "low"
+                        on_active: root.set_priority("low") if self.active else None
+                        md_bg_color:
+                            (0.88, 1, 0.9, 1) if self.active else \
+                            app.theme_cls.bg_normal
+
+                    MDChip:
+                        text: "Med"
+                        type: "choice"
+                        active: root._priority == "med"
+                        on_active: root.set_priority("med") if self.active else None
+                        md_bg_color:
+                            (1, 0.97, 0.88, 1) if self.active else \
+                            app.theme_cls.bg_normal
+
+                    MDChip:
+                        text: "High"
+                        type: "choice"
+                        active: root._priority == "high"
+                        on_active: root.set_priority("high") if self.active else None
+                        md_bg_color:
+                            (1, 0.9, 0.9, 1) if self.active else \
+                            app.theme_cls.bg_normal
+
+                # --------------------------------------------------------
+                # Category
+                # --------------------------------------------------------
+                MDLabel:
+                    text: "Category"
+                    theme_text_color: "Hint"
+                    font_style: "Caption"
+                    size_hint_y: None
+                    height: dp(18)
+
+                MDRaisedButton:
+                    id: cat_btn
+                    text: root._category_name
+                    size_hint_x: 1
+                    on_release: root.open_category_menu(self)
+
+                # --------------------------------------------------------
+                # Recurrence
+                # --------------------------------------------------------
+                MDLabel:
+                    text: "Recurrence"
+                    theme_text_color: "Hint"
+                    font_style: "Caption"
+                    size_hint_y: None
+                    height: dp(18)
+
+                MDRaisedButton:
+                    id: rec_btn
+                    text: root._recurrence_label
+                    size_hint_x: 1
+                    on_release: root.open_recurrence_menu(self)
+
+                # --------------------------------------------------------
+                # Notes
+                # --------------------------------------------------------
+                MDTextField:
+                    id: notes_field
+                    hint_text: "Notes (optional)"
+                    mode: "rectangle"
+                    multiline: True
+                    size_hint_y: None
+                    height: dp(120)
+
+                # --------------------------------------------------------
+                # Delete (edit mode only — hidden in add mode)
+                # --------------------------------------------------------
+                Widget:
+                    size_hint_y: None
+                    height: dp(8)
+
+                MDRaisedButton:
+                    id: delete_btn
+                    text: "DELETE TASK"
+                    md_bg_color: 0.85, 0.15, 0.15, 1
+                    size_hint_x: 1
+                    opacity: 0
+                    disabled: True
+                    on_release: root.confirm_delete()

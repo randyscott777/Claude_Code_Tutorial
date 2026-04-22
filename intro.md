@@ -2,6 +2,14 @@
 
 Claude Code is an **agentic AI coding assistant** that operates directly in your terminal. It understands your codebase and can take real actions — reading files, writing code, running tests, and managing your full development workflow.
 
+### Platforms
+* Terminal / command line (CLI))
+* Web at claude.ai/code
+* Desktop
+* VS Code (via extension)
+* Chrome (via extension)
+* JetBrains
+
 ### What Makes Claude Code Different?
 
 Unlike chatbots where you copy-paste code back and forth, Claude Code works *inside your environment*. It has direct access to your filesystem, can execute shell commands, and completes multi-step tasks autonomously — just like a developer sitting at the keyboard.
@@ -22,7 +30,7 @@ Unlike chatbots where you copy-paste code back and forth, Claude Code works *ins
 * Memory - cross session in CLAUDE.md file, create via claude /init
 * MCP servers - Google Calendar, Gmail, filesystem
 * Skills - Predefined skills for explain-code and create-todo-list
-* Hooks - ?
+* Hooks - for commands to execute before and after certain spots in the life cycle
 * Git - for version control and commitment 
 * Cost - tokens used and balances
 

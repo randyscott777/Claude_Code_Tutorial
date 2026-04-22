@@ -1,0 +1,125 @@
+#:import dp kivy.metrics.dp
+
+
+# ---------------------------------------------------------------------------
+# Dialog text-field content
+# ---------------------------------------------------------------------------
+
+<CategoryInputContent>:
+    adaptive_height: True
+    padding: [dp(24), dp(8), dp(24), dp(8)]
+
+    MDTextField:
+        id: name_field
+        hint_text: "Category name"
+        mode: "rectangle"
+
+
+# ---------------------------------------------------------------------------
+# Individual category row
+# ---------------------------------------------------------------------------
+
+<CategoryItem>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: dp(64)
+    padding: [dp(16), dp(8), dp(8), dp(8)]
+    spacing: dp(8)
+
+    canvas.after:
+        Color:
+            rgba: app.theme_cls.divider_color
+        Line:
+            points: [self.x + dp(16), self.y, self.right - dp(16), self.y]
+            width: 0.8
+
+    # Category icon
+    MDIcon:
+        icon: "tag-outline"
+        theme_text_color: "Hint"
+        size_hint: None, None
+        size: dp(32), dp(32)
+        pos_hint: {"center_y": 0.5}
+
+    # Name + task count
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(2)
+
+        MDLabel:
+            text: root.name
+            theme_text_color: "Primary"
+            font_style: "Body1"
+            shorten: True
+            shorten_from: "right"
+            size_hint_y: 0.55
+
+        MDLabel:
+            text:
+                str(root.task_count) + (" task" if root.task_count == 1 else " tasks")
+            theme_text_color: "Hint"
+            font_style: "Caption"
+            size_hint_y: 0.45
+
+    # Edit button
+    MDIconButton:
+        icon: "pencil-outline"
+        pos_hint: {"center_y": 0.5}
+        theme_icon_color: "Hint"
+        on_release: root.edit()
+
+    # Delete button
+    MDIconButton:
+        icon: "delete-outline"
+        pos_hint: {"center_y": 0.5}
+        theme_icon_color: "Custom"
+        icon_color: 0.85, 0.15, 0.15, 1
+        on_release: root.delete()
+
+
+# ---------------------------------------------------------------------------
+# Categories screen
+# ---------------------------------------------------------------------------
+
+<CategoriesScreen>:
+    name: "categories"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Categories"
+            elevation: 2
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+
+        FloatLayout:
+
+            MDScrollView:
+                size_hint: 1, 1
+                pos_hint: {"x": 0, "y": 0}
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+
+                    # Empty state
+                    MDLabel:
+                        id: empty_label
+                        text: "No categories yet.\nTap + to add one."
+                        halign: "center"
+                        theme_text_color: "Hint"
+                        size_hint_y: None
+                        height: dp(80)
+                        opacity: 1
+
+                    MDList:
+                        id: cat_list
+                        size_hint_y: None
+                        height: self.minimum_height
+                        padding: 0
+
+            MDFloatingActionButton:
+                icon: "plus"
+                pos_hint: {"right": 0.95, "y": 0.04}
+                elevation: 4
+                on_release: root.open_add_dialog()

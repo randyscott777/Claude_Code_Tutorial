@@ -1,0 +1,212 @@
+#:import dp kivy.metrics.dp
+
+
+# ---------------------------------------------------------------------------
+# Individual task row
+# ---------------------------------------------------------------------------
+
+<TaskItem>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: dp(72)
+    padding: [dp(4), dp(4), dp(4), dp(4)]
+    spacing: dp(4)
+
+    canvas.after:
+        Color:
+            rgba: app.theme_cls.divider_color
+        Line:
+            points: [self.x + dp(16), self.y, self.right - dp(16), self.y]
+            width: 0.8
+
+    # Done checkbox
+    MDCheckbox:
+        id: cb
+        size_hint: None, None
+        size: dp(48), dp(48)
+        pos_hint: {"center_y": 0.5}
+        active: root.done
+        on_active: root.on_checkbox_active(*args)
+
+    # Title + subtitle
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(2)
+
+        MDLabel:
+            text: root.title
+            theme_text_color: "Hint" if root.done else "Primary"
+            font_style: "Body1"
+            shorten: True
+            shorten_from: "right"
+            size_hint_y: 0.55
+
+        MDLabel:
+            text:
+                (root.category_text + "  •  " if root.category_text else "") + \
+                root.due_date_text
+            theme_text_color: "Hint"
+            font_style: "Caption"
+            shorten: True
+            size_hint_y: 0.45
+
+    # Priority badge
+    MDLabel:
+        text: root.priority.upper()
+        size_hint: None, None
+        size: dp(44), dp(28)
+        pos_hint: {"center_y": 0.5}
+        halign: "center"
+        valign: "middle"
+        theme_text_color: "Custom"
+        text_color:
+            (0.9, 0.2, 0.2, 1) if root.priority == "high" else \
+            (0.95, 0.6, 0.1, 1) if root.priority == "med" else \
+            (0.2, 0.72, 0.32, 1)
+        font_style: "Caption"
+        bold: True
+        canvas.before:
+            Color:
+                rgba:
+                    (1, 0.9, 0.9, 1) if root.priority == "high" else \
+                    (1, 0.97, 0.88, 1) if root.priority == "med" else \
+                    (0.88, 1, 0.9, 1)
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [dp(6)]
+
+    # Edit button
+    MDIconButton:
+        icon: "pencil-outline"
+        pos_hint: {"center_y": 0.5}
+        theme_icon_color: "Hint"
+        on_release: root.go_to_edit()
+
+
+# ---------------------------------------------------------------------------
+# Task list screen
+# ---------------------------------------------------------------------------
+
+<TaskListScreen>:
+    name: "task_list"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # Top app bar
+        MDTopAppBar:
+            title: "My Tasks"
+            elevation: 2
+            right_action_items:
+                [ \
+                  ["tag-multiple-outline", lambda x: root.go_to_categories()], \
+                  ["sort", lambda x: root.open_sort_menu(x)], \
+                  ["cog-outline", lambda x: root.go_to_settings()], \
+                ]
+
+        # Search field
+        MDTextField:
+            hint_text: "Search tasks..."
+            mode: "rectangle"
+            icon_right: "magnify"
+            size_hint_y: None
+            height: dp(56)
+            on_text: root.on_search(self.text)
+
+        # Filter chips row
+        ScrollView:
+            size_hint_y: None
+            height: dp(52)
+            do_scroll_y: False
+            bar_width: 0
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_x: None
+                width: self.minimum_width
+                spacing: dp(8)
+                padding: [dp(12), dp(8), dp(12), dp(8)]
+
+                # Priority filters
+                MDChip:
+                    text: "All"
+                    type: "filter"
+                    active: root._priority_filter == "all"
+                    on_active: root.set_priority_filter("all") if self.active else None
+
+                MDChip:
+                    text: "High"
+                    type: "filter"
+                    active: root._priority_filter == "high"
+                    on_active: root.set_priority_filter("high") if self.active else None
+
+                MDChip:
+                    text: "Med"
+                    type: "filter"
+                    active: root._priority_filter == "med"
+                    on_active: root.set_priority_filter("med") if self.active else None
+
+                MDChip:
+                    text: "Low"
+                    type: "filter"
+                    active: root._priority_filter == "low"
+                    on_active: root.set_priority_filter("low") if self.active else None
+
+                Widget:
+                    size_hint_x: None
+                    width: dp(8)
+                    canvas:
+                        Color:
+                            rgba: app.theme_cls.divider_color
+                        Line:
+                            points: [self.center_x, self.y + dp(6), self.center_x, self.top - dp(6)]
+                            width: 0.8
+
+                # Done status filters
+                MDChip:
+                    text: "Active"
+                    type: "filter"
+                    active: root._done_filter == "active"
+                    on_active: root.set_done_filter("active") if self.active else None
+
+                MDChip:
+                    text: "Done"
+                    type: "filter"
+                    active: root._done_filter == "done"
+                    on_active: root.set_done_filter("done") if self.active else None
+
+                MDChip:
+                    text: "All Status"
+                    type: "filter"
+                    active: root._done_filter == "all"
+                    on_active: root.set_done_filter("all") if self.active else None
+
+        # Task count label
+        MDLabel:
+            id: task_count
+            text: ""
+            theme_text_color: "Hint"
+            font_style: "Caption"
+            size_hint_y: None
+            height: dp(24)
+            padding: [dp(16), 0]
+
+        # Scrollable task list + FAB overlay
+        FloatLayout:
+
+            MDScrollView:
+                size_hint: 1, 1
+                pos_hint: {"x": 0, "y": 0}
+
+                MDList:
+                    id: task_list
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: 0
+
+            MDFloatingActionButton:
+                icon: "plus"
+                pos_hint: {"right": 0.95, "y": 0.04}
+                elevation: 4
+                on_release: root.go_to_add()

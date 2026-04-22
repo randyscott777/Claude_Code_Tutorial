@@ -1,3 +1,4 @@
+# memoryDoc.md
 CLAUDE.md files let you give Claude Code persistent instructions that apply automatically to every session. Think of it as a briefing document Claude always reads before starting work on a project.
 
 ### What is CLAUDE.md?
@@ -63,6 +64,7 @@ Use `/memory` to view, add, or remove entries from Claude's memory files:
 
 > **Best Practice:** Manually create a CLAUDE.md before starting any project. This single investment pays dividends on every future session — Claude arrives already knowing your conventions, eliminating repetitive context-setting.
 
-claude /init to initially (automatically) create the CLAUDE.md file in the project root directory
+claude /init to initially (automatically) create the CLAUDE.md file in the project root directory or to update it (after major changes)
 
 claude /memory to display the contents 
+

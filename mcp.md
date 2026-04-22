@@ -149,5 +149,65 @@ The Google Calendar and Gmail MCP servers you're seeing (tools prefixed with
   The mcp list command only shows locally-configured servers. Remote servers (like these Google ones) 
   don't appear there — they're injected at the session level based on your account.
 
-  The tool name prefix mcp__claude_ai_* is the giveaway — claude_ai means these are Anthropic-hosted  
+  The tool name prefix mcp__claude_ai_* is the giveaway — claude_ai means these are Anthropic-hosted
   remote MCP servers, not local processes.
+
+## Building MCP Servers with FastMCP
+
+[FastMCP](https://github.com/jlowin/fastmcp) is a Python framework that makes it easy to build your own MCP servers with minimal boilerplate.
+
+### Install
+
+```bash
+pip install fastmcp
+```
+
+### Create a Server
+
+```python
+from fastmcp import FastMCP
+
+mcp = FastMCP("my-tools")
+
+@mcp.tool()
+def add(a: int, b: int) -> int:
+    """Add two numbers."""
+    return a + b
+
+@mcp.resource("config://settings")
+def get_settings() -> str:
+    """Return app settings."""
+    return "debug=true"
+
+if __name__ == "__main__":
+    mcp.run()
+```
+
+### Add to Claude Code
+
+```bash
+claude mcp add my-tools python path/to/server.py
+```
+
+Or in `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "my-tools": {
+      "command": "python",
+      "args": ["path/to/server.py"]
+    }
+  }
+}
+```
+
+### Key FastMCP Concepts
+
+| Decorator | Purpose |
+|-----------|---------|
+| `@mcp.tool()` | Expose a callable function as a tool Claude can invoke |
+| `@mcp.resource()` | Expose data at a URI Claude can read |
+| `@mcp.prompt()` | Define reusable prompt templates |
+
+FastMCP handles the MCP protocol, schema generation from type hints, and server lifecycle — you just write Python functions.

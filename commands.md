@@ -56,17 +56,18 @@ Create this commit? [Y/n]: Y
 
 ### Command Claude Code commands, switches, and keyboard shortcuts
 
-Prompts can be anything with double quotes, for example:
+For example:
 - claude to start the Claude Code agent
 - claude /doctor to display diagnostic and update settings
 - claude --version will display the version in 1.2.3 format
 - claude "What does this project do?"
-- claude -p "prompt" switch executes the prompt and returns to the command line
+- claude -p "prompt" switch executes the prompt and returns to the command line. 
+  Note: Prompts can be anything within the double quotes
 - claude -c switch continues the current conversation
 - claude -r switch continues the previous conversation
 - claude /help will display a link to Claude Code website for the options
 - claude /model modelname' will use the model specified or blank for the picker
-Note: use opus for planning and then sonnet for building
+  Note: use opus 4.7 for planning and then sonnet for building
 - claude /clear will clear the current conversation
 - claude /exit or Ctrl-C will end claude code agent and return to the command line
 - shift-tab in the agent to toggle between plan mode, shortcuts, and accept edits

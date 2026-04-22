@@ -93,7 +93,7 @@ Hooks can influence Claude's behavior through their exit code and output:
 * PreCompact	       Before context compaction
 * SessionEnd	       When a session terminates
 
-# Config of my Claude stop notification (in .claude/settings.json)
+# Config of my Claude stop notification (in .claude/settings.json) - PROJECT
 "hooks": {
     "Stop": [
       {

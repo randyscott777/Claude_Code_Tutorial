@@ -30,7 +30,7 @@ Build apps with the Claude API or Anthropic SDK.
 For global, create the following in ~/.claude/skills/explain-code/SKILL.md
 For project, create the following in .claude/skills/explain-code/SKILL.md
 
-# LIVE EXAMPLE 1: to explain code (global)
+# LIVE EXAMPLE 1: to explain code (global in .claude)
 ---
 name: explain-code
 description: Explains code with visual diagrams and analogies. Use when explaining how code works, teaching about a codebase, or when the user asks "how does this work?"
@@ -47,9 +47,22 @@ Keep explanations conversational. For complex concepts, use multiple analogies.
 
 ## Usage ##
 Either:
-claude "How does this code work"
-or
+claude "How does this code work"  
+or  
 claude /explain-code /users/randy/onedrive/visualstudiocode/Claude_Code_Tutorial/menu.py
 
 # LIVE EXAMPLE 2: to create app to maintain a to do list using flask and SQLite3 raw commands
-## Usage: clause /create-todo-list
+## Usage: claude /create-todo-list
+Creates a flask app with raw SQLite3 statements
+
+# LIVE EXAMPLE 3: create a system (global)
+## Usage: claude /create a system 
+Creates a system with related lists
+
+# LIVE EXAMPLE 4: front-end design
+## Usage: claude /front-end design
+Produces high quality UI
+
+# GLOBAL EXAMPLE 5: plan an app
+## Usage: claude plan
+Show the plan and allow any changes before building

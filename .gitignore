@@ -11,6 +11,10 @@ venv/
 
 # SQLite databases
 *.db
+*.sqlite3
+
+# Embedded MCP server repo (has its own .git and OAuth credentials)
+gdrive-mcp/
 
 # OAuth / credential files
 credentials.json

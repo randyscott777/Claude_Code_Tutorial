@@ -1,0 +1,13 @@
+{% extends 'todos/base.html' %}
+
+{% block content %}
+<h2>Add Todo</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="What needs to be done?" autofocus required>
+    <div style="margin-top:12px;">
+        <button type="submit" class="btn btn-primary">Add</button>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

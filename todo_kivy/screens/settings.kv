@@ -1,0 +1,164 @@
+#:import dp kivy.metrics.dp
+
+
+<SettingsScreen>:
+    name: "settings"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Settings"
+            elevation: 2
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+
+        ScrollView:
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: [0, dp(8), 0, dp(24)]
+
+                # --------------------------------------------------------
+                # Section: Appearance
+                # --------------------------------------------------------
+                MDLabel:
+                    text: "APPEARANCE"
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    font_style: "Caption"
+                    bold: True
+                    size_hint_y: None
+                    height: dp(40)
+                    padding: [dp(16), 0]
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: dp(56)
+                    padding: [dp(16), 0, dp(8), 0]
+
+                    MDIcon:
+                        icon: "weather-night"
+                        theme_text_color: "Hint"
+                        size_hint: None, None
+                        size: dp(24), dp(24)
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        text: "Dark mode"
+                        font_style: "Body1"
+                        padding: [dp(12), 0]
+
+                    MDSwitch:
+                        active: root._dark_mode
+                        pos_hint: {"center_y": 0.5}
+                        on_active: root.toggle_theme(self.active)
+
+                MDDivider:
+
+                # --------------------------------------------------------
+                # Section: Task Defaults
+                # --------------------------------------------------------
+                MDLabel:
+                    text: "TASK DEFAULTS"
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    font_style: "Caption"
+                    bold: True
+                    size_hint_y: None
+                    height: dp(40)
+                    padding: [dp(16), 0]
+
+                # Default sort row
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: dp(64)
+                    padding: [dp(16), dp(8), dp(8), dp(8)]
+
+                    MDIcon:
+                        icon: "sort"
+                        theme_text_color: "Hint"
+                        size_hint: None, None
+                        size: dp(24), dp(24)
+                        pos_hint: {"center_y": 0.5}
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding: [dp(12), 0]
+
+                        MDLabel:
+                            text: "Default sort"
+                            font_style: "Body1"
+                            size_hint_y: 0.55
+
+                        MDLabel:
+                            text: root._sort_label
+                            theme_text_color: "Hint"
+                            font_style: "Caption"
+                            size_hint_y: 0.45
+
+                    MDIconButton:
+                        id: sort_btn
+                        icon: "chevron-down"
+                        pos_hint: {"center_y": 0.5}
+                        on_release: root.open_sort_menu(self)
+
+                MDDivider:
+
+                # Default priority row
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: dp(88)
+                    padding: [dp(16), dp(12), dp(16), dp(8)]
+                    spacing: dp(10)
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: dp(24)
+                        spacing: dp(12)
+
+                        MDIcon:
+                            icon: "flag-outline"
+                            theme_text_color: "Hint"
+                            size_hint: None, None
+                            size: dp(24), dp(24)
+                            pos_hint: {"center_y": 0.5}
+
+                        MDLabel:
+                            text: "Default priority for new tasks"
+                            font_style: "Body1"
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        spacing: dp(8)
+
+                        MDChip:
+                            text: "Low"
+                            type: "choice"
+                            active: root._default_priority == "low"
+                            on_active: root.set_default_priority("low") if self.active else None
+                            md_bg_color:
+                                (0.88, 1, 0.9, 1) if self.active else \
+                                app.theme_cls.bg_normal
+
+                        MDChip:
+                            text: "Med"
+                            type: "choice"
+                            active: root._default_priority == "med"
+                            on_active: root.set_default_priority("med") if self.active else None
+                            md_bg_color:
+                                (1, 0.97, 0.88, 1) if self.active else \
+                                app.theme_cls.bg_normal
+
+                        MDChip:
+                            text: "High"
+                            type: "choice"
+                            active: root._default_priority == "high"
+                            on_active: root.set_default_priority("high") if self.active else None
+                            md_bg_color:
+                                (1, 0.9, 0.9, 1) if self.active else \
+                                app.theme_cls.bg_normal

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repository Is
 
-A self-contained Claude Code tutorial consisting of educational markdown files and a Python menu navigator. The content teaches users how to install, configure, and effectively use Claude Code.
+A self-contained Claude Code tutorial consisting of educational markdown files, a Python terminal menu navigator, and several example todo apps built in different frameworks (CLI, Flask, Kivy, Django).
 
 ## Running the Tutorial Menu
 
@@ -12,31 +12,40 @@ A self-contained Claude Code tutorial consisting of educational markdown files a
 python menu.py
 ```
 
-Presents a numbered menu to display any tutorial file. Files are read from the current working directory, so the script must be run from the project root.
+Presents a numbered menu that renders any tutorial markdown file using `rich`. Must be run from the project root. Requires `rich` and, for option 13, Google API client libraries.
 
-## Content Structure
-
-Each markdown file covers a distinct Claude Code topic:
+## Tutorial Content Files
 
 | File | Topic |
 |------|-------|
 | `intro.md` | What Claude Code is and its core capabilities |
-| `setup.md` | Installation, authentication, and config file locations |
-| `commands.md` | Slash commands reference (`/commit`, `/plan`, `/review`, etc.) |
-| `memory.md` | CLAUDE.md purpose,'/init' and `/memory` command, memory file hierarchy |
-| `hooks.md` | Hook events (PreToolUse, PostToolUse, Stop) and configuration patterns |
-| `mcp.md` | MCP servers — adding, configuring, and managing external tool integrations |
-| `skills.md` | Available skills (`keybindings-help`, `simplify`, `claude-developer-platform`) |
-| `git.md` | Git/GitHub integration, PR workflow, safety rules, `gh` CLI usage |
-| `tips.md` | Best practices and antipatterns for effective Claude Code usage |
+| `setup.md` | Installation, authentication, config file locations |
+| `commands.md` | Slash commands reference |
+| `memory.md` | CLAUDE.md purpose, `/init`, `/memory` command |
+| `hooks.md` | Hook events (PreToolUse, PostToolUse, Stop) and config |
+| `mcp.md` | MCP servers — adding, configuring, managing |
+| `skills.md` | Available skills |
+| `git.md` | Git/GitHub integration, PR workflow, `gh` CLI |
+| `tips.md` | Best practices and antipatterns |
+| `cost.md` | Token usage and balances |
+| `StatusLine.md` | Custom status line configuration |
+| `todos.md` | Future development backlog |
+
+## Example Apps
+
+- **`todo_cli.py`** — Click-based CLI todo manager. SQLite DB at `~/.todos.db`. Run: `python todo_cli.py` or `python todo_cli.py menu` for interactive mode.
+- **`todo_flask/`** — Flask web todo app. SQLite DB at `todo_flask/todos.db`. Run: `python todo_flask/app.py` (starts on port 5000).
+- **`todo_kivy/`** — Kivy mobile todo app (`main.py`). Has `tests/` subdirectory and `buildozer.spec` for Android builds.
+- **`django_todo/`** — Django todo app. Run: `python django_todo/manage.py runserver`.
+
+## Extending the Tutorial Menu
+
+When adding a new topic file:
+1. Create `<topic>.md` in the project root.
+2. Add a `print("N. <topic>")` line to the menu output in `menu.py`.
+3. Add a corresponding `if option == N:` block calling `show("<topic>.md")`.
 
 ## Config Files
 
-`.claude/settings.local.json` grants auto-approval for `start:*` and `node:*` Bash commands locally. Project-level settings belong in `.claude/settings.json` (committed); personal overrides go in `.claude/settings.local.json` (not committed).
-
-## Extending the Tutorial
-
-When adding a new topic file:
-1. Create the `<topic>.md` file in the project root
-2. Add a corresponding `if opt == "N":` block in `menu.py` (following the existing pattern)
-3. Add a `print("N. <topic>.md")` line to the menu output in `menu.py`
+- `.claude/settings.json` — project-level Claude Code settings (committed).
+- `.claude/settings.local.json` — personal auto-approval overrides (not committed).
