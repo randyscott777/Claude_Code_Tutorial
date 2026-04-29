@@ -25,7 +25,8 @@ print("6. Skills for explain-code and create-todo-list")
 print("7. Hook for Claude stop notifications")
 print("8. Github for version control and backup")
 print("9. Tips")
-print("10. Subagents")
+print("10. Sub_agents.md - how to create and use sub-agents")
+print("10.1 Subagents - practical guide (sub-agents.md)")
 print("11. Todos for future development and markdown commands")
 print("12. Costs - token usage and balances")
 print("13. List messages in Gmail inbox")
@@ -77,6 +78,9 @@ if option == 9:
 
 if option == 10:
     show("sub_agents.md")
+
+if option == 10.1:
+    show("sub-agents.md")
 
 if option == 11:
     show("todos.md")
