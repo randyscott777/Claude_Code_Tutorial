@@ -25,16 +25,16 @@ Unlike chatbots where you copy-paste code back and forth, Claude Code works *ins
 - **Multi-step Automation** — Chain complex workflows from one instruction
 
 # Features of Claude Code Usage in this Project
-* Setup settings.json - in user for command to display a status line command (only works for a bash terminal and therefore had to change the default terminal setting)
-  extension panel and by claude.ai 
-  and in project for hook at stop time to display a Windows completion meesage
+* Setup settings.json - in project for hook at stop time to display a Windows completion meesage and in user for command to display a status line command with model, cost, changes  
+  Note: only works for a bash terminal and therefore had to change the default terminal setting
+  extension panel and by claude.ai
 * Commands - deadcode in project
 * Memory - cross session in CLAUDE.md file, created via claude /init
 * MCP servers - Google Calendar, Gmail, filesystem
 * Skills - explain-code, create-todo-list, create-a-system, frontend-design, plan-an=app (user)  
-           and commit-reminder (project level)
-* Hooks - see in project settings.json
-* Sub Agents - invoke via /agents
+           and commit-reminder (project level) via ????
+* Hooks - see in project settings.json (to display Windows completion message)
+* Sub Agents - invoke via /agents command
 * Git - for version control and commitment 
 * Cost - show tokens used and balances
 * Apps - menu (CLI), django_todo, todo_flask, todo_kivy, and SDK examples  
