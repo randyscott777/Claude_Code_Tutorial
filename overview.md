@@ -156,3 +156,4 @@
 - [VS Code Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code)
 - [Claude Code on Amazon Bedrock](https://docs.claude.com/en/docs/claude-code/bedrock)
 - [Claude Code on Google Vertex AI](https://docs.claude.com/en/docs/claude-code/vertex)
+

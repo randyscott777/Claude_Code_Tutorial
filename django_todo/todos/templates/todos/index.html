@@ -6,7 +6,7 @@
 <ul style="list-style:none; padding:0; margin-top:20px;">
 {% for todo in todos %}
     <li style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #eee;">
-        <a href="{% url 'toggle' todo.pk %}" title="Toggle complete">
+        <a href="{% url 'toggle' todo.id %}" title="Toggle complete">
             {% if todo.completed %}
                 <span style="font-size:20px;">&#9989;</span>
             {% else %}
@@ -16,8 +16,8 @@
         <span style="flex:1; {% if todo.completed %}text-decoration:line-through; color:#999;{% endif %}">
             {{ todo.title }}
         </span>
-        <a href="{% url 'edit' todo.pk %}" class="btn btn-secondary">Edit</a>
-        <form method="post" action="{% url 'delete' todo.pk %}" style="display:inline;">
+        <a href="{% url 'edit' todo.id %}" class="btn btn-secondary">Edit</a>
+        <form method="post" action="{% url 'delete' todo.id %}" style="display:inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this todo?')">Delete</button>
         </form>

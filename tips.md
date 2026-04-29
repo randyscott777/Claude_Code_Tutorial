@@ -71,8 +71,9 @@ Run `/compact` periodically during long sessions to prevent context overflow whi
 
 > **Golden Rule:** Treat Claude Code as a collaborative pair programmer. Clear communication, specific context, and verification steps lead to the best outcomes — just like working with a human colleague.
 
-# Markdown Commands: Single lb-sign - Center within a rectangle outline
-## Double lb-sign: Center and underline
-### Triple lb-sign: Center
+# Markdown Commands: Single pound-sign - Center within a rectangle outline
+## Double pound-sign: Center and underline
+### Triple pound-sign: Center
 * Single asterisk: to be a bullet
+- dash also displays as a bullet
 

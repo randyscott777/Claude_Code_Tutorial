@@ -25,7 +25,7 @@ print("6. Skills for explain-code and create-todo-list")
 print("7. Hook for Claude stop notifications")
 print("8. Github for version control and backup")
 print("9. Tips")
-print("10. Subagents ***TBD***")
+print("10. Subagents")
 print("11. Todos for future development and markdown commands")
 print("12. Costs - token usage and balances")
 print("13. List messages in Gmail inbox")
@@ -36,6 +36,7 @@ print("17. Web and Routines")
 print("18. Claude Agent SDK")
 print("19. Display all files using Claude Agent SDK")
 print("20. Display all TODO comments using Claude Agent SDK")
+print("21. Create CRON task on GitHub to send a daily hello email to aol.com")
 
 option = float(input("Enter the number of the file you want to read: ") or 0)
 
@@ -75,7 +76,7 @@ if option == 9:
     show("tips.md")
 
 if option == 10:
-    print("subagents TBD")
+    show("sub_agents.md")
 
 if option == 11:
     show("todos.md")
@@ -132,7 +133,6 @@ if option == 17:
 if option == 18:
     show("sdk.md")
 
-
 if option == 19:
     print("This is a long running process to display all files using Claude Agent SDK...\n")
     import sdk_files_example
@@ -143,4 +143,7 @@ if option == 20:
     with open("sdk_todos_example.py") as f:
         exec(f.read())
 
-# TODO - some examples 
+# TODO - someuse this example for option 20
+
+if option == 21:
+    show("daily-email.md")

@@ -1,13 +1,9 @@
+# Invoked by .claude/settings.json statusLine command. Runs in the CLI (terminal),
+# not in the web app.
 import json, sys
 
-# json.load reads and parses stdin in one step
 data = json.load(sys.stdin)
 model = data.get('model', {}).get('display_name', 'Unknown')
-# "or 0" handles null values
-pct = int(data.get('context_window', {}).get('used_percentage', 0) or 0)
+cost = data.get('cost', {}).get('total_cost_usd', 0) or 0
 
-# String multiplication builds the bar
-filled = pct * 10 // 100
-bar = '▓' * filled + '░' * (10 - filled)
-
-print(f"[{model}] {bar} {pct}%")
+print(f"[{model}] ${cost:.2f}")

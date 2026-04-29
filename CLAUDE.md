@@ -49,3 +49,4 @@ When adding a new topic file:
 
 - `.claude/settings.json` — project-level Claude Code settings (committed).
 - `.claude/settings.local.json` — personal auto-approval overrides (not committed).
+

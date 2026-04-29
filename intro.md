@@ -24,14 +24,20 @@ Unlike chatbots where you copy-paste code back and forth, Claude Code works *ins
 - **Git Integration** — Commits, branches, diffs, pull requests, and history
 - **Multi-step Automation** — Chain complex workflows from one instruction
 
-### Features of Claude Code
-* Setup - in settings.json file for permissions, ?, ?, etc
-* Commands - the various Claude Code commands, switches, and keyboard shortcuts
-* Memory - cross session in CLAUDE.md file, create via claude /init
+# Features of Claude Code Usage in this Project
+* Setup settings.json - in user for command to display a status line command (only works for a bash terminal and therefore had to change the default terminal setting)
+  extension panel and by claude.ai 
+  and in project for hook at stop time to display a Windows completion meesage
+* Commands - deadcode in project
+* Memory - cross session in CLAUDE.md file, created via claude /init
 * MCP servers - Google Calendar, Gmail, filesystem
-* Skills - Predefined skills for explain-code and create-todo-list
-* Hooks - for commands to execute before and after certain spots in the life cycle
+* Skills - explain-code, create-todo-list, create-a-system, frontend-design, plan-an=app (user)  
+           and commit-reminder (project level)
+* Hooks - see in project settings.json
+* Sub Agents - invoke via /agents
 * Git - for version control and commitment 
-* Cost - tokens used and balances
+* Cost - show tokens used and balances
+* Apps - menu (CLI), django_todo, todo_flask, todo_kivy, and SDK examples  
+  and daily-email in GitHub (cron via .yml file)
 
 
