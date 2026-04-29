@@ -1,9 +1,9 @@
 ---
 name: commit-status
-description: Check whether the working tree has accumulated enough uncommitted changes to warrant a commit, and if so, summarize them and offer to commit. Use when the user invokes /commit-reminder.
+description: Check whether the working tree has accumulated enough uncommitted changes to warrant a commit, and if so, summarize them and offer to commit. Use when the user invokes /commit-status skill.
 ---
 
-# commit-reminder
+# commit-status (via /commit-status skill)
 
 When invoked, do the following:
 
