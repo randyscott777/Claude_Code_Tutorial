@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}New To Do{% endblock %}
+{% block content %}
+
+<h1>New To Do</h1>
+
+<form method="post" class="form">
+  <label>Title
+    <input type="text" name="title" required>
+  </label>
+  <label>Description
+    <textarea name="description"></textarea>
+  </label>
+  <label>Status
+    <select name="status">
+      {% for s in status_options %}
+        <option value="{{ s }}" {% if s == 'Not Started' %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Priority
+    <select name="priority">
+      {% for p in priority_options %}
+        <option value="{{ p }}" {% if p == 'Medium' %}selected{% endif %}>{{ p }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Due Date
+    <input type="date" name="due_date">
+  </label>
+  <div class="actions">
+    <button type="submit" class="btn primary">Create</button>
+    <a class="btn" href="{{ url_for('index') }}">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Edit To Do{% endblock %}
+{% block content %}
+
+<h1>Edit To Do</h1>
+
+<form method="post" class="form">
+  <label>Title
+    <input type="text" name="title" value="{{ todo.title }}" required>
+  </label>
+  <label>Description
+    <textarea name="description">{{ todo.description }}</textarea>
+  </label>
+  <label>Status
+    <select name="status">
+      {% for s in status_options %}
+        <option value="{{ s }}" {% if todo.status == s %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Priority
+    <select name="priority">
+      {% for p in priority_options %}
+        <option value="{{ p }}" {% if todo.priority == p %}selected{% endif %}>{{ p }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Due Date
+    <input type="date" name="due_date" value="{{ todo.due_date or '' }}">
+  </label>
+  <div class="actions">
+    <button type="submit" class="btn primary">Save</button>
+    <a class="btn" href="{{ url_for('index') }}">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}
