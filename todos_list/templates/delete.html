@@ -1,18 +1,27 @@
 {% extends "base.html" %}
-{% block title %}Delete To Do{% endblock %}
+{% block title %}Delete Todo{% endblock %}
+
 {% block content %}
-
-<h1>Delete To Do?</h1>
-
-<div class="confirm-text">
-  Are you sure you want to delete <strong>{{ todo.title }}</strong>? This cannot be undone.
+<div class="app-header">
+  <h1>🗑️ Delete Todo</h1>
+  <a class="btn-secondary" href="{{ url_for('index') }}">← Back</a>
 </div>
 
-<form method="post" class="form">
-  <div class="actions">
-    <button type="submit" class="btn danger">Yes, delete</button>
-    <a class="btn" href="{{ url_for('index') }}">Cancel</a>
+<div class="form-card">
+  <p>Are you sure you want to delete this todo? This cannot be undone.</p>
+  <div class="todo" style="margin: 16px 0;">
+    <div>
+      <div class="title">{{ todo.title }}</div>
+      {% if todo.description %}<div class="desc">{{ todo.description }}</div>{% endif %}
+    </div>
+    <span class="chip status-{{ todo.status|lower|replace(' ', '-') }}">{{ todo.status }}</span>
+    <span class="chip priority-{{ todo.priority|lower }}">{{ todo.priority }}</span>
   </div>
-</form>
-
+  <form method="post">
+    <div class="form-actions">
+      <button class="btn-danger" type="submit">Yes, delete</button>
+      <a class="btn-secondary" href="{{ url_for('index') }}">Cancel</a>
+    </div>
+  </form>
+</div>
 {% endblock %}

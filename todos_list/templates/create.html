@@ -1,37 +1,47 @@
 {% extends "base.html" %}
-{% block title %}New To Do{% endblock %}
+{% block title %}New Todo{% endblock %}
+
 {% block content %}
+<div class="app-header">
+  <h1>＋ New Todo</h1>
+  <a class="btn-secondary" href="{{ url_for('index') }}">← Back</a>
+</div>
 
-<h1>New To Do</h1>
-
-<form method="post" class="form">
-  <label>Title
-    <input type="text" name="title" required>
-  </label>
-  <label>Description
-    <textarea name="description"></textarea>
-  </label>
-  <label>Status
-    <select name="status">
-      {% for s in status_options %}
-        <option value="{{ s }}" {% if s == 'Not Started' %}selected{% endif %}>{{ s }}</option>
-      {% endfor %}
-    </select>
-  </label>
-  <label>Priority
-    <select name="priority">
-      {% for p in priority_options %}
-        <option value="{{ p }}" {% if p == 'Medium' %}selected{% endif %}>{{ p }}</option>
-      {% endfor %}
-    </select>
-  </label>
-  <label>Due Date
-    <input type="date" name="due_date">
-  </label>
-  <div class="actions">
-    <button type="submit" class="btn primary">Create</button>
-    <a class="btn" href="{{ url_for('index') }}">Cancel</a>
-  </div>
-</form>
-
+<div class="form-card">
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="post">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" name="title" value="{{ form.title or '' }}" required autofocus>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea name="description">{{ form.description or '' }}</textarea>
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <select name="status">
+        {% for s in statuses %}
+          <option value="{{ s }}" {% if (form.status or 'Not Started') == s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label>Priority</label>
+      <select name="priority">
+        {% for p in priorities %}
+          <option value="{{ p }}" {% if (form.priority or 'Medium') == p %}selected{% endif %}>{{ p }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label>Due Date</label>
+      <input type="date" name="due_date" value="{{ form.due_date or '' }}">
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" type="submit">Create</button>
+      <a class="btn-secondary" href="{{ url_for('index') }}">Cancel</a>
+    </div>
+  </form>
+</div>
 {% endblock %}

@@ -1,80 +1,81 @@
 {% extends "base.html" %}
-{% block title %}To Dos — Dashboard{% endblock %}
+{% block title %}Todos · Dashboard{% endblock %}
+
 {% block content %}
+<div class="app-header">
+  <h1>📋 My Todos</h1>
+  <a class="btn-new" href="{{ url_for('create') }}">＋ New</a>
+</div>
 
-<section class="menu">
-  <a class="btn primary" href="{{ url_for('create') }}">+ New To Do</a>
-</section>
+<div class="stats">
+  <div class="stat total"><div class="num">{{ stats.total }}</div><div class="label">Total</div></div>
+  <div class="stat not-started"><div class="num">{{ stats.not_started }}</div><div class="label">Not Started</div></div>
+  <div class="stat in-progress"><div class="num">{{ stats.in_progress }}</div><div class="label">In Progress</div></div>
+  <div class="stat done"><div class="num">{{ stats.done }}</div><div class="label">Done</div></div>
+  <div class="stat blocked"><div class="num">{{ stats.blocked }}</div><div class="label">Blocked</div></div>
+  <div class="stat overdue"><div class="num">{{ stats.overdue }}</div><div class="label">Overdue</div></div>
+</div>
 
-<form method="post" action="{{ url_for('filter_sort') }}" class="controls">
-  <label>Status
-    <select name="filter_status">
-      <option value="">All</option>
-      {% for s in status_options %}
-        <option value="{{ s }}" {% if settings.filter_status == s %}selected{% endif %}>{{ s }}</option>
-      {% endfor %}
-    </select>
-  </label>
-  <label>Priority
-    <select name="filter_priority">
-      <option value="">All</option>
-      {% for p in priority_options %}
-        <option value="{{ p }}" {% if settings.filter_priority == p %}selected{% endif %}>{{ p }}</option>
-      {% endfor %}
-    </select>
-  </label>
-  <label>Sort By
-    <select name="sort_field">
-      {% for f in sort_fields %}
-        <option value="{{ f }}" {% if settings.sort_field == f %}selected{% endif %}>{{ f }}</option>
-      {% endfor %}
-    </select>
-  </label>
-  <label>Direction
-    <select name="sort_dir">
-      <option value="asc"  {% if settings.sort_dir == 'asc'  %}selected{% endif %}>Ascending</option>
-      <option value="desc" {% if settings.sort_dir == 'desc' %}selected{% endif %}>Descending</option>
-    </select>
-  </label>
-  <button type="submit" class="btn primary">Apply</button>
+<form method="post" action="{{ url_for('update_prefs') }}" class="controls">
+  <label>Status</label>
+  <select name="filter_status">
+    <option value="All" {% if prefs.filter_status == 'All' %}selected{% endif %}>All</option>
+    {% for s in statuses %}
+      <option value="{{ s }}" {% if prefs.filter_status == s %}selected{% endif %}>{{ s }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Priority</label>
+  <select name="filter_priority">
+    <option value="All" {% if prefs.filter_priority == 'All' %}selected{% endif %}>All</option>
+    {% for p in priorities %}
+      <option value="{{ p }}" {% if prefs.filter_priority == p %}selected{% endif %}>{{ p }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Sort by</label>
+  <select name="sort_field">
+    {% for f in sort_fields %}
+      <option value="{{ f }}" {% if prefs.sort_field == f %}selected{% endif %}>{{ f.replace('_', ' ').title() }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="sort_dir">
+    <option value="asc"  {% if prefs.sort_dir == 'asc'  %}selected{% endif %}>Ascending</option>
+    <option value="desc" {% if prefs.sort_dir == 'desc' %}selected{% endif %}>Descending</option>
+  </select>
+
+  <button class="apply" type="submit">Apply</button>
 </form>
 
-<table class="todos">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Status</th>
-      <th>Priority</th>
-      <th>Due</th>
-      <th>Created</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+{% if todos %}
+<div class="todo-head" role="row">
+  <span>Title</span>
+  <span>Status</span>
+  <span>Priority</span>
+  <span>Due Date</span>
+  <span>Actions</span>
+</div>
+<ul class="todo-list">
   {% for t in todos %}
-    <tr>
-      <td class="title-cell">{{ t.title }}</td>
-      <td><span class="chip status-{{ t.status|replace(' ', '-')|lower }}">{{ t.status }}</span></td>
-      <td><span class="chip priority-{{ t.priority|lower }}">{{ t.priority }}</span></td>
-      <td>{{ t.due_date or '' }}</td>
-      <td>{{ t.created_at }}</td>
-      <td class="actions">
-        <a href="{{ url_for('edit', todo_id=t.id) }}" class="icon-btn edit" title="Edit">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="#2196F3" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-          </svg>
-        </a>
-        <a href="{{ url_for('delete', todo_id=t.id) }}" class="icon-btn delete" title="Delete">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="#E53935" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-          </svg>
-        </a>
-      </td>
-    </tr>
-  {% else %}
-    <tr><td colspan="6" class="empty">No to dos yet — click <strong>+ New To Do</strong> to add one.</td></tr>
+  <li class="todo priority-{{ t.priority|lower }}">
+    <div>
+      <div class="title">{{ t.title }}</div>
+      {% if t.description %}<div class="desc">{{ t.description }}</div>{% endif %}
+    </div>
+    <span class="chip status-{{ t.status|lower|replace(' ', '-') }}">{{ t.status }}</span>
+    <span class="chip priority-{{ t.priority|lower }}">{{ t.priority }}</span>
+    <span class="due {% if t.due_date and t.due_date < today and t.status != 'Done' %}overdue{% endif %}">
+      {% if t.due_date %}📅 {{ t.due_date }}{% else %}—{% endif %}
+    </span>
+    <span class="actions">
+      <a class="icon-btn edit" href="{{ url_for('edit', todo_id=t.id) }}" title="Edit">✏️</a>
+      <a class="icon-btn delete" href="{{ url_for('delete', todo_id=t.id) }}" title="Delete">🗑️</a>
+    </span>
+  </li>
   {% endfor %}
-  </tbody>
-</table>
-
+</ul>
+{% else %}
+<div class="empty">No todos match your filter. Click <strong>New</strong> to add one.</div>
+{% endif %}
 {% endblock %}

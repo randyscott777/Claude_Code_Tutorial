@@ -72,3 +72,10 @@ For example:
 - claude /exit or Ctrl-C will end claude code agent and return to the command line
 - shift-tab in the agent to toggle between plan mode, shortcuts, and accept edits
 - claude /status to display status, config, and usage
+
+# Custom Commands
+## In global ~/.claude/commands  
+* open-claude-folder.md  
+
+## In project .claude/commands  
+* deadcode.md

@@ -19,4 +19,4 @@ chmod
   }
 }
 
-# Note: this does not work in Claude Code terminal UI (ie VS Code extension)
+# Note: this only works in Claude Code if using the bash terminal 

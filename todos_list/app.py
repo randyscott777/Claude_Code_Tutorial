@@ -1,207 +1,210 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect, url_for
-
-app = Flask(__name__)
+from datetime import date
+from flask import Flask, render_template, request, redirect, url_for, g
 
 DB_PATH = r"C:\Users\randy\OneDrive\VisualStudioCode\Claude_Code_Tutorial\todos_list\todos.db"
 
-STATUS_OPTIONS = ["Not Started", "In Progress", "Done"]
-PRIORITY_OPTIONS = ["Low", "Medium", "High", "Urgent"]
-SORT_FIELDS = ["id", "title", "status", "priority", "due_date", "created_at"]
+STATUSES = ["Not Started", "In Progress", "Done", "Blocked"]
+PRIORITIES = ["Low", "Medium", "High", "Urgent"]
+SORT_FIELDS = ["title", "status", "priority", "due_date", "created_at"]
+SORT_DIRS = ["asc", "desc"]
 
-DEFAULT_SETTINGS = {
-    "filter_status": "",
-    "filter_priority": "",
-    "sort_field": "created_at",
-    "sort_dir": "desc",
-}
+app = Flask(__name__)
 
 
-def get_conn():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+def get_db():
+    db = getattr(g, "_db", None)
+    if db is None:
+        db = g._db = sqlite3.connect(DB_PATH)
+        db.row_factory = sqlite3.Row
+    return db
+
+
+@app.teardown_appcontext
+def close_db(_):
+    db = getattr(g, "_db", None)
+    if db is not None:
+        db.close()
 
 
 def init_db():
-    conn = get_conn()
-    cur = conn.cursor()
-    cur.execute(
-        """
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS todos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            description TEXT DEFAULT '',
+            description TEXT,
             status TEXT NOT NULL DEFAULT 'Not Started',
             priority TEXT NOT NULL DEFAULT 'Medium',
             due_date TEXT,
-            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            created_at TEXT NOT NULL DEFAULT (datetime('now'))
         )
-        """
-    )
-    cur.execute(
-        """
-        CREATE TABLE IF NOT EXISTS settings (
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS prefs (
             key TEXT PRIMARY KEY,
             value TEXT
         )
-        """
-    )
-    for k, v in DEFAULT_SETTINGS.items():
-        cur.execute(
-            "INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)",
-            (k, v),
-        )
-    conn.commit()
-    conn.close()
+    """)
+    for k, v in [
+        ("filter_status", "All"),
+        ("filter_priority", "All"),
+        ("sort_field", "created_at"),
+        ("sort_dir", "desc"),
+    ]:
+        cur.execute("INSERT OR IGNORE INTO prefs (key, value) VALUES (?, ?)", (k, v))
+    con.commit()
+    con.close()
 
 
-def get_settings():
-    conn = get_conn()
-    cur = conn.cursor()
-    cur.execute("SELECT key, value FROM settings")
-    rows = cur.fetchall()
-    conn.close()
-    settings = dict(DEFAULT_SETTINGS)
-    for row in rows:
-        settings[row["key"]] = row["value"]
-    return settings
+def get_prefs():
+    rows = get_db().execute("SELECT key, value FROM prefs").fetchall()
+    return {r["key"]: r["value"] for r in rows}
 
 
-def save_settings(updates):
-    conn = get_conn()
-    cur = conn.cursor()
-    for k, v in updates.items():
-        cur.execute(
-            "INSERT INTO settings (key, value) VALUES (?, ?) "
-            "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
-            (k, v),
-        )
-    conn.commit()
-    conn.close()
+def set_pref(key, value):
+    db = get_db()
+    db.execute("UPDATE prefs SET value = ? WHERE key = ?", (value, key))
+    db.commit()
 
 
 @app.route("/")
 def index():
-    settings = get_settings()
+    prefs = get_prefs()
+    db = get_db()
 
-    where = []
-    params = []
-    if settings["filter_status"]:
+    where, params = [], []
+    if prefs["filter_status"] != "All":
         where.append("status = ?")
-        params.append(settings["filter_status"])
-    if settings["filter_priority"]:
+        params.append(prefs["filter_status"])
+    if prefs["filter_priority"] != "All":
         where.append("priority = ?")
-        params.append(settings["filter_priority"])
+        params.append(prefs["filter_priority"])
+    where_sql = ("WHERE " + " AND ".join(where)) if where else ""
 
-    sort_field = settings["sort_field"] if settings["sort_field"] in SORT_FIELDS else "created_at"
-    sort_dir = "ASC" if settings["sort_dir"] == "asc" else "DESC"
+    sort_field = prefs["sort_field"] if prefs["sort_field"] in SORT_FIELDS else "created_at"
+    sort_dir = prefs["sort_dir"] if prefs["sort_dir"] in SORT_DIRS else "desc"
+    direction = "ASC" if sort_dir == "asc" else "DESC"
 
-    sql = "SELECT * FROM todos"
-    if where:
-        sql += " WHERE " + " AND ".join(where)
-    sql += f" ORDER BY {sort_field} {sort_dir}"
+    if sort_field == "priority":
+        order_sql = (
+            f"CASE priority WHEN 'Urgent' THEN 1 WHEN 'High' THEN 2 "
+            f"WHEN 'Medium' THEN 3 WHEN 'Low' THEN 4 END {direction}"
+        )
+    elif sort_field == "status":
+        order_sql = (
+            f"CASE status WHEN 'Not Started' THEN 1 WHEN 'In Progress' THEN 2 "
+            f"WHEN 'Blocked' THEN 3 WHEN 'Done' THEN 4 END {direction}"
+        )
+    else:
+        order_sql = f"{sort_field} {direction}"
 
-    conn = get_conn()
-    cur = conn.cursor()
-    cur.execute(sql, params)
-    todos = cur.fetchall()
-    conn.close()
+    todos = db.execute(
+        f"SELECT * FROM todos {where_sql} ORDER BY {order_sql}", params
+    ).fetchall()
+
+    today = date.today().isoformat()
+    stats = {
+        "total": db.execute("SELECT COUNT(*) FROM todos").fetchone()[0],
+        "not_started": db.execute("SELECT COUNT(*) FROM todos WHERE status = 'Not Started'").fetchone()[0],
+        "in_progress": db.execute("SELECT COUNT(*) FROM todos WHERE status = 'In Progress'").fetchone()[0],
+        "done": db.execute("SELECT COUNT(*) FROM todos WHERE status = 'Done'").fetchone()[0],
+        "blocked": db.execute("SELECT COUNT(*) FROM todos WHERE status = 'Blocked'").fetchone()[0],
+        "overdue": db.execute(
+            "SELECT COUNT(*) FROM todos WHERE due_date IS NOT NULL AND due_date < ? AND status != 'Done'",
+            (today,),
+        ).fetchone()[0],
+    }
 
     return render_template(
         "index.html",
         todos=todos,
-        settings=settings,
-        status_options=STATUS_OPTIONS,
-        priority_options=PRIORITY_OPTIONS,
+        prefs=prefs,
+        stats=stats,
+        statuses=STATUSES,
+        priorities=PRIORITIES,
         sort_fields=SORT_FIELDS,
+        today=today,
     )
 
 
-@app.route("/filter", methods=["POST"])
-def filter_sort():
-    save_settings(
-        {
-            "filter_status": request.form.get("filter_status", ""),
-            "filter_priority": request.form.get("filter_priority", ""),
-            "sort_field": request.form.get("sort_field", "created_at"),
-            "sort_dir": request.form.get("sort_dir", "desc"),
-        }
-    )
+@app.route("/prefs", methods=["POST"])
+def update_prefs():
+    set_pref("filter_status", request.form.get("filter_status", "All"))
+    set_pref("filter_priority", request.form.get("filter_priority", "All"))
+    set_pref("sort_field", request.form.get("sort_field", "created_at"))
+    set_pref("sort_dir", request.form.get("sort_dir", "desc"))
     return redirect(url_for("index"))
 
 
-@app.route("/create", methods=["GET", "POST"])
+@app.route("/new", methods=["GET", "POST"])
 def create():
     if request.method == "POST":
-        conn = get_conn()
-        cur = conn.cursor()
-        cur.execute(
-            "INSERT INTO todos (title, description, status, priority, due_date) "
-            "VALUES (?, ?, ?, ?, ?)",
+        title = request.form.get("title", "").strip()
+        if not title:
+            return render_template(
+                "create.html",
+                statuses=STATUSES, priorities=PRIORITIES,
+                error="Title is required.", form=request.form,
+            )
+        db = get_db()
+        db.execute(
+            "INSERT INTO todos (title, description, status, priority, due_date) VALUES (?, ?, ?, ?, ?)",
             (
-                request.form["title"].strip(),
-                request.form.get("description", "").strip(),
+                title,
+                request.form.get("description", "").strip() or None,
                 request.form.get("status", "Not Started"),
                 request.form.get("priority", "Medium"),
                 request.form.get("due_date") or None,
             ),
         )
-        conn.commit()
-        conn.close()
+        db.commit()
         return redirect(url_for("index"))
-    return render_template(
-        "create.html",
-        status_options=STATUS_OPTIONS,
-        priority_options=PRIORITY_OPTIONS,
-    )
+    return render_template("create.html", statuses=STATUSES, priorities=PRIORITIES, form={})
 
 
 @app.route("/edit/<int:todo_id>", methods=["GET", "POST"])
 def edit(todo_id):
-    conn = get_conn()
-    cur = conn.cursor()
+    db = get_db()
     if request.method == "POST":
-        cur.execute(
-            "UPDATE todos SET title = ?, description = ?, status = ?, "
-            "priority = ?, due_date = ? WHERE id = ?",
+        title = request.form.get("title", "").strip()
+        todo = db.execute("SELECT * FROM todos WHERE id = ?", (todo_id,)).fetchone()
+        if not todo:
+            return redirect(url_for("index"))
+        if not title:
+            return render_template(
+                "edit.html", todo=todo,
+                statuses=STATUSES, priorities=PRIORITIES,
+                error="Title is required.",
+            )
+        db.execute(
+            "UPDATE todos SET title = ?, description = ?, status = ?, priority = ?, due_date = ? WHERE id = ?",
             (
-                request.form["title"].strip(),
-                request.form.get("description", "").strip(),
+                title,
+                request.form.get("description", "").strip() or None,
                 request.form.get("status", "Not Started"),
                 request.form.get("priority", "Medium"),
                 request.form.get("due_date") or None,
                 todo_id,
             ),
         )
-        conn.commit()
-        conn.close()
+        db.commit()
         return redirect(url_for("index"))
-    cur.execute("SELECT * FROM todos WHERE id = ?", (todo_id,))
-    todo = cur.fetchone()
-    conn.close()
+    todo = db.execute("SELECT * FROM todos WHERE id = ?", (todo_id,)).fetchone()
     if not todo:
         return redirect(url_for("index"))
-    return render_template(
-        "edit.html",
-        todo=todo,
-        status_options=STATUS_OPTIONS,
-        priority_options=PRIORITY_OPTIONS,
-    )
+    return render_template("edit.html", todo=todo, statuses=STATUSES, priorities=PRIORITIES)
 
 
 @app.route("/delete/<int:todo_id>", methods=["GET", "POST"])
 def delete(todo_id):
-    conn = get_conn()
-    cur = conn.cursor()
+    db = get_db()
     if request.method == "POST":
-        cur.execute("DELETE FROM todos WHERE id = ?", (todo_id,))
-        conn.commit()
-        conn.close()
+        db.execute("DELETE FROM todos WHERE id = ?", (todo_id,))
+        db.commit()
         return redirect(url_for("index"))
-    cur.execute("SELECT * FROM todos WHERE id = ?", (todo_id,))
-    todo = cur.fetchone()
-    conn.close()
+    todo = db.execute("SELECT * FROM todos WHERE id = ?", (todo_id,)).fetchone()
     if not todo:
         return redirect(url_for("index"))
     return render_template("delete.html", todo=todo)
@@ -209,4 +212,4 @@ def delete(todo_id):
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5000)

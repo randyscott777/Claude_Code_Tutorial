@@ -189,7 +189,7 @@ if __name__ == "__main__":
 claude mcp add my-tools python path/to/server.py
 ```
 
-Or in `.claude/settings.json`:
+Or in `.claude/settings.local.json`:
 
 ```json
 {

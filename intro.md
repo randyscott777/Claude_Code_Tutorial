@@ -27,8 +27,7 @@ Unlike chatbots where you copy-paste code back and forth, Claude Code works *ins
 # Features of Claude Code Usage in this Project
 * Setup settings.json - in project for hook at stop time to display a Windows completion meesage and in user for command to display a status line command with model, cost, changes  
   Note: only works for a bash terminal and therefore had to change the default terminal setting
-  extension panel and by claude.ai
-* Commands - deadcode in project
+* Commands - deadcode in project and open-claude-folder in global/user
 * Memory - cross session in CLAUDE.md file, created via claude /init
 * MCP servers - Google Calendar, Gmail, filesystem
 * Skills - explain-code, create-todo-list, create-a-system, frontend-design, plan-an=app (user)  
