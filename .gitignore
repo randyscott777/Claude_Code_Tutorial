@@ -21,6 +21,7 @@ credentials.json
 token.json
 *.pem
 *.key
+.email_credentials
 
 # Kivy / buildozer artifacts
 .buildozer/
