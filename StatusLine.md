@@ -11,7 +11,7 @@ print(f"[{model}] {bar} {pct}%")
 2. Allow it to be executable:
 chmod
 
-3. Define in global settings.json:
+3. Define in the GLOBAL settings.json:
 {
   "statusLine": {
     "type": "command",
@@ -19,4 +19,3 @@ chmod
   }
 }
 
-# Note: this only works in Claude Code if using the bash terminal 

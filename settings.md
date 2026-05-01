@@ -112,5 +112,7 @@ cat .claude/settings.local.json
 Navigate to any project directory and run `claude`. Claude will automatically read your project structure and be ready for instructions.
 
 # Current Usage (of settings.json)
-* 1. Global for spinner verbs for star trek theme
-* 2. Project level for permission to allow certain bash commands
+* 1. Global for status line (spinner verbs for star trek theme tbd)
+* 2. Global local for bash permissions
+* 3. Project level for permission to allow certain bash commands
+* 4. Project local for extended permissions and mcp servers
