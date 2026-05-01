@@ -36,7 +36,8 @@ print("18. Claude Agent SDK")
 print("19. Display all files using Claude Agent SDK")
 print("20. Display all TODO comments using Claude Agent SDK")
 print("21. Create CRON task on GitHub to send a daily hello email to aol.com")
-
+print("22. VS Code info")
+      
 option = float(input("Enter the number of the file you want to read: ") or 0)
 
 print('\n ')
@@ -145,7 +146,7 @@ if option == 20:
     with open("sdk_todos_example.py") as f:
         exec(f.read())
 
-# TODO - someuse this example for option 20
+# TODO - uses this example for option 20
 
-if option == 21:
-    show("daily-email.md")
+if option == 22:
+    show("vs-code.md")

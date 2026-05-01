@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8"><title>Codebase Explorer</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; margin: 0; background: #1a1a2e; color: #eee; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { width: 280px; background: #252542; padding: 20px; border-right: 1px solid #3d3d5c; overflow-y: auto; flex-shrink: 0; }
+    .main { flex: 1; padding: 20px; overflow-y: auto; }
+    h1 { margin: 0 0 10px 0; font-size: 18px; }
+    h2 { margin: 20px 0 10px 0; font-size: 14px; color: #888; text-transform: uppercase; }
+    .stat { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #3d3d5c; }
+    .stat-value { font-weight: bold; }
+    .bar-row { display: flex; align-items: center; margin: 6px 0; }
+    .bar-label { width: 55px; font-size: 12px; color: #aaa; }
+    .bar { height: 18px; border-radius: 3px; }
+    .bar-pct { margin-left: 8px; font-size: 12px; color: #666; }
+    .tree { list-style: none; padding-left: 20px; }
+    details { cursor: pointer; }
+    summary { padding: 4px 8px; border-radius: 4px; }
+    summary:hover { background: #2d2d44; }
+    .folder { color: #ffd700; }
+    .file { display: flex; align-items: center; padding: 4px 8px; border-radius: 4px; }
+    .file:hover { background: #2d2d44; }
+    .size { color: #888; margin-left: auto; font-size: 12px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+  </style>
+</head><body>
+  <div class="container">
+    <div class="sidebar">
+      <h1>📊 Summary</h1>
+      <div class="stat"><span>Files</span><span class="stat-value">103</span></div>
+      <div class="stat"><span>Directories</span><span class="stat-value">20</span></div>
+      <div class="stat"><span>Total size</span><span class="stat-value">744.6 KB</span></div>
+      <div class="stat"><span>File types</span><span class="stat-value">12</span></div>
+      <h2>By file type</h2>
+      <div class="bar-row"><span class="bar-label">.py</span><div class="bar" style="width:41.57960724243481%;background:#3776ab"></div><span class="bar-pct">41.6%</span></div><div class="bar-row"><span class="bar-label">.md</span><div class="bar" style="width:24.92032849577577%;background:#083fa1"></div><span class="bar-pct">24.9%</span></div><div class="bar-row"><span class="bar-label">.sqlite3</span><div class="bar" style="width:17.726811330009205%;background:#6b7280"></div><span class="bar-pct">17.7%</span></div><div class="bar-row"><span class="bar-label">.db</span><div class="bar" style="width:5.908937110003069%;background:#6b7280"></div><span class="bar-pct">5.9%</span></div><div class="bar-row"><span class="bar-label">.kv</span><div class="bar" style="width:2.918403265023488%;background:#6b7280"></div><span class="bar-pct">2.9%</span></div><div class="bar-row"><span class="bar-label">.html</span><div class="bar" style="width:2.3591945506002574%;background:#e34c26"></div><span class="bar-pct">2.4%</span></div><div class="bar-row"><span class="bar-label">.css</span><div class="bar" style="width:2.3048998958696716%;background:#264de4"></div><span class="bar-pct">2.3%</span></div><div class="bar-row"><span class="bar-label">(no ext)</span><div class="bar" style="width:1.7164455099369709%;background:#6b7280"></div><span class="bar-pct">1.7%</span></div>
+    </div>
+    <div class="main">
+      <h1>📁 Claude_Code_Tutorial</h1>
+      <ul class="tree" id="root"></ul>
+    </div>
+  </div>
+  <script>
+    const data = {"name": "Claude_Code_Tutorial", "children": [{"name": "CLAUDE.md", "size": 2266, "ext": ".md"}, {"name": "codebase-map.html", "size": 0, "ext": ".html"}, {"name": "commands.md", "size": 3104, "ext": ".md"}, {"name": "cost.md", "size": 4097, "ext": ".md"}, {"name": "daily-email.md", "size": 542, "ext": ".md"}, {"name": "django_todo", "children": [{"name": "db.sqlite3", "size": 135168, "ext": ".sqlite3"}, {"name": "django_todo", "children": [{"name": "__init__.py", "size": 0, "ext": ".py"}, {"name": "asgi.py", "size": 415, "ext": ".py"}, {"name": "settings.py", "size": 2120, "ext": ".py"}, {"name": "urls.py", "size": 94, "ext": ".py"}, {"name": "wsgi.py", "size": 415, "ext": ".py"}], "size": 3044}, {"name": "manage.py", "size": 689, "ext": ".py"}, {"name": "todos", "children": [{"name": "__init__.py", "size": 0, "ext": ".py"}, {"name": "apps.py", "size": 90, "ext": ".py"}, {"name": "db.py", "size": 2108, "ext": ".py"}, {"name": "migrations", "children": [{"name": "__init__.py", "size": 0, "ext": ".py"}], "size": 0}, {"name": "models.py", "size": 92, "ext": ".py"}, {"name": "templates", "children": [{"name": "todos", "children": [{"name": "add.html", "size": 415, "ext": ".html"}, {"name": "base.html", "size": 993, "ext": ".html"}, {"name": "edit.html", "size": 405, "ext": ".html"}, {"name": "index.html", "size": 1213, "ext": ".html"}], "size": 3026}], "size": 3026}, {"name": "tests.py", "size": 63, "ext": ".py"}, {"name": "urls.py", "size": 321, "ext": ".py"}, {"name": "views.py", "size": 1034, "ext": ".py"}], "size": 6734}], "size": 145635}, {"name": "gdrive-mcp", "children": [{"name": "auth.py", "size": 2719, "ext": ".py"}, {"name": "credentials.json", "size": 414, "ext": ".json"}, {"name": "docs", "children": [{"name": "plans", "children": [{"name": "2026-02-27-gmail-calendar-docs-enhancement-design.md", "size": 13121, "ext": ".md"}, {"name": "2026-02-27-implementation-plan.md", "size": 99996, "ext": ".md"}], "size": 113117}], "size": 113117}, {"name": "gdrive_mcp.egg-info", "children": [{"name": "dependency_links.txt", "size": 1, "ext": ".txt"}, {"name": "PKG-INFO", "size": 11997, "ext": "(no ext)"}, {"name": "requires.txt", "size": 122, "ext": ".txt"}, {"name": "SOURCES.txt", "size": 409, "ext": ".txt"}, {"name": "top_level.txt", "size": 35, "ext": ".txt"}], "size": 12564}, {"name": "helpers.py", "size": 9361, "ext": ".py"}, {"name": "LICENSE", "size": 1091, "ext": "(no ext)"}, {"name": "pyproject.toml", "size": 1080, "ext": ".toml"}, {"name": "README.md", "size": 11064, "ext": ".md"}, {"name": "server.py", "size": 416, "ext": ".py"}, {"name": "services.py", "size": 1639, "ext": ".py"}, {"name": "token.json", "size": 1066, "ext": ".json"}, {"name": "tools", "children": [{"name": "__init__.py", "size": 434, "ext": ".py"}, {"name": "calendar.py", "size": 27851, "ext": ".py"}, {"name": "comments.py", "size": 4633, "ext": ".py"}, {"name": "docs.py", "size": 44391, "ext": ".py"}, {"name": "drive.py", "size": 29985, "ext": ".py"}, {"name": "gmail.py", "size": 20366, "ext": ".py"}, {"name": "management.py", "size": 12080, "ext": ".py"}, {"name": "scripts.py", "size": 20923, "ext": ".py"}, {"name": "sheets.py", "size": 25425, "ext": ".py"}, {"name": "slides.py", "size": 33590, "ext": ".py"}], "size": 219678}], "size": 374209}, {"name": "git.md", "size": 5360, "ext": ".md"}, {"name": "hooks.md", "size": 4046, "ext": ".md"}, {"name": "intro.md", "size": 2347, "ext": ".md"}, {"name": "mcp.md", "size": 8737, "ext": ".md"}, {"name": "memoryDoc.md", "size": 2456, "ext": ".md"}, {"name": "menu.py", "size": 5028, "ext": ".py"}, {"name": "overview.md", "size": 7315, "ext": ".md"}, {"name": "sdk.md", "size": 498, "ext": ".md"}, {"name": "sdk_files_example.py", "size": 356, "ext": ".py"}, {"name": "sdk_todos_example.py", "size": 393, "ext": ".py"}, {"name": "setup.md", "size": 2855, "ext": ".md"}, {"name": "skills.md", "size": 2359, "ext": ".md"}, {"name": "StatusLine.md", "size": 589, "ext": ".md"}, {"name": "StatusLine.py", "size": 810, "ext": ".py"}, {"name": "sub-agents.md", "size": 5835, "ext": ".md"}, {"name": "sub_agents.md", "size": 4243, "ext": ".md"}, {"name": "tips.md", "size": 2704, "ext": ".md"}, {"name": "todo_cli.py", "size": 10423, "ext": ".py"}, {"name": "todo_flask", "children": [{"name": "app.py", "size": 4216, "ext": ".py"}, {"name": "static", "children": [{"name": "style.css", "size": 10349, "ext": ".css"}], "size": 10349}, {"name": "templates", "children": [{"name": "add.html", "size": 1364, "ext": ".html"}, {"name": "base.html", "size": 667, "ext": ".html"}, {"name": "edit.html", "size": 1569, "ext": ".html"}, {"name": "index.html", "size": 3766, "ext": ".html"}], "size": 7366}, {"name": "todos.db", "size": 12288, "ext": ".db"}], "size": 34219}, {"name": "todo_kivy", "children": [{"name": "BUILD.md", "size": 4155, "ext": ".md"}, {"name": "buildozer.spec", "size": 1184, "ext": ".spec"}, {"name": "db.py", "size": 8912, "ext": ".py"}, {"name": "main.py", "size": 1188, "ext": ".py"}, {"name": "screens", "children": [{"name": "__init__.py", "size": 0, "ext": ".py"}, {"name": "categories.kv", "size": 3478, "ext": ".kv"}, {"name": "categories.py", "size": 6583, "ext": ".py"}, {"name": "settings.kv", "size": 6096, "ext": ".kv"}, {"name": "settings.py", "size": 3344, "ext": ".py"}, {"name": "task_form.kv", "size": 6054, "ext": ".kv"}, {"name": "task_form.py", "size": 8419, "ext": ".py"}, {"name": "task_list.kv", "size": 6625, "ext": ".kv"}, {"name": "task_list.py", "size": 7305, "ext": ".py"}], "size": 47904}, {"name": "settings_store.py", "size": 676, "ext": ".py"}, {"name": "tests", "children": [{"name": "test_db.py", "size": 10862, "ext": ".py"}], "size": 10862}], "size": 74881}, {"name": "todos.db", "size": 12288, "ext": ".db"}, {"name": "todos.md", "size": 305, "ext": ".md"}, {"name": "todos_list", "children": [{"name": "app.py", "size": 7278, "ext": ".py"}, {"name": "MEMORY.md", "size": 1035, "ext": ".md"}, {"name": "static", "children": [{"name": "style.css", "size": 7226, "ext": ".css"}], "size": 7226}, {"name": "templates", "children": [{"name": "base.html", "size": 302, "ext": ".html"}, {"name": "create.html", "size": 1525, "ext": ".html"}, {"name": "delete.html", "size": 954, "ext": ".html"}, {"name": "edit.html", "size": 1489, "ext": ".html"}, {"name": "index.html", "size": 3327, "ext": ".html"}], "size": 7597}, {"name": "todos.db", "size": 20480, "ext": ".db"}], "size": 43616}, {"name": "vs-code.md", "size": 433, "ext": ".md"}, {"name": "web.md", "size": 557, "ext": ".md"}], "size": 762506};
+    const colors = {".js": "#f7df1e", ".ts": "#3178c6", ".py": "#3776ab", ".go": "#00add8", ".rs": "#dea584", ".rb": "#cc342d", ".css": "#264de4", ".html": "#e34c26", ".json": "#6b7280", ".md": "#083fa1", ".yaml": "#cb171e", ".yml": "#cb171e", ".mdx": "#083fa1", ".tsx": "#3178c6", ".jsx": "#61dafb", ".sh": "#4eaa25"};
+    function fmt(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(1) + ' KB'; return (b/1048576).toFixed(1) + ' MB'; }
+    function render(node, parent) {
+      if (node.children) {
+        const det = document.createElement('details');
+        det.open = parent === document.getElementById('root');
+        det.innerHTML = `<summary><span class="folder">📁 ${node.name}</span><span class="size">${fmt(node.size)}</span></summary>`;
+        const ul = document.createElement('ul'); ul.className = 'tree';
+        node.children.sort((a,b) => (b.children?1:0)-(a.children?1:0) || a.name.localeCompare(b.name));
+        node.children.forEach(c => render(c, ul));
+        det.appendChild(ul);
+        const li = document.createElement('li'); li.appendChild(det); parent.appendChild(li);
+      } else {
+        const li = document.createElement('li'); li.className = 'file';
+        li.innerHTML = `<span class="dot" style="background:${colors[node.ext]||'#6b7280'}"></span>${node.name}<span class="size">${fmt(node.size)}</span>`;
+        parent.appendChild(li);
+      }
+    }
+    data.children.forEach(c => render(c, document.getElementById('root')));
+  </script>
+</body></html>

@@ -30,7 +30,7 @@ Unlike chatbots where you copy-paste code back and forth, Claude Code works *ins
 * Commands - deadcode in project and open-claude-folder in global/user
 * Memory - cross session in CLAUDE.md file, created via claude /init
 * MCP servers - Google Calendar, Gmail, filesystem
-* Skills - explain-code, create-todo-list, create-a-system, frontend-design, plan-an=app (user)  
+* Skills - explain-code, create-todo-list, create-a-system, frontend-design, plan-an-app (global)  
            and /commit-status (project level) command
 * Hooks - see in project settings.json (to display Windows completion message)
 * Sub Agents - invoke via /agents command
