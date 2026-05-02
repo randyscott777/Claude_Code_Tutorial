@@ -36,10 +36,12 @@ while True:
     print("9. Tips and coding for markdown commands")
     print("10. Sub_agents.md - how to create and use sub-agents")
     print("10.1 Sub-agents - practical guide (sub-agents.md)")
+    print("10.2 Code reviewer (sub)agent (code-reviewer.md)")
+    print("10.3 Security reviewer (sub)agent (security-reviewer.md)")
     print("11. Todos for future development of this project")
     print("12. Costs - token usage and balances")
     print("13. List messages in Gmail inbox")
-    print("14. Plugins and Marketplace ***TBD***")
+    print("14. Plugins (MCP servers and custom TBD) and Marketplace (TBD)")
     print("15. Remote Control ***TBD***")
     print("16. Agent TEAMS ***TBD***")
     print("17. Web and Routines")
@@ -123,6 +125,12 @@ while True:
     if option == 10.1:
         show("sub-agents.md")
 
+    if option == 10.2:
+        show(".claude/agents/code-reviewer.md")
+
+    if option == 10.3:
+        show(".claude/agents/security-reviewer.md")
+
     if option == 11:
         show("todos.md")
 
@@ -171,6 +179,15 @@ while True:
                 sender = headers.get('From', '(unknown)')
                 date = headers.get('Date', '')[:16]
                 console.print(f"[green]{date:<18}[/green] [yellow]{sender[:35]:<37}[/yellow] {subject}")
+
+    if option == 14:
+        show("plugins.md")
+
+    if option == 15:
+        print("remote control - tbd")
+
+    if option == 16:
+        print("agents teams - tbd")
 
     if option == 17:
         show("web.md")

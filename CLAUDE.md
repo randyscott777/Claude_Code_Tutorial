@@ -35,6 +35,7 @@ Option 13 requires Google API client libraries (`google-auth`, `google-auth-oaut
 | 10.1 | `sub-agents.md` | Sub-agents practical guide |
 | 11 | `todos.md` | Future development backlog |
 | 12 | `cost.md` | Token usage and balances |
+| 14 | `plugins.md` | MCP plugins — finding, installing, and writing them |
 | 17 | `web.md` | Web and routines |
 | 18 | `sdk.md` | Claude Agent SDK |
 | 19 | `sdk_files_example.py` | Lists directory files via Agent SDK |

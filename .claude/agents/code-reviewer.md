@@ -1,3 +1,4 @@
+# Code Reviewer Agent
 ---
 name: code-reviewer
 description: Reviews recently changed code for bugs, correctness, and design issues. Use after writing or editing code, before committing.
