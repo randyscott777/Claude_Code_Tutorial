@@ -17,12 +17,18 @@ while True:
     print("1.2 Overview")
     print("Setup and configure settings.json file")
     print("2 - StatusLine.md")
-    print("2.1. - Global json for Custom Status Line")
-    print("2.2. - Global local json for a few Git permissions")
-    print("2.3. - Project json for hook for stop message")
-    print("2.4. - Project local for extended permissions and mcp servers")
+    print("2.1 - Global json for Custom Status Line")
+    print("2.2 - Global local json for a few Git permissions")
+    print("2.3 - Project json for hook for stop message")
+    print("2.4 - Project local for extended permissions and mcp servers")
     print("3. Commands for open ~/.claude folder (in global) and deadcode (in project folder)")
-    print("4. Memory (across sessions via CLAUDE.md)")
+    print("4. MemoryDoc.md (describes CLAUDE.md and MEMORY.md in global and project)")
+    print("4.1 CLAUDE.md (global)- main memory file for all sessions")
+    print("4.2 CLAUDE.md (project)- main memory file for all sessions")
+    print("4.3 MEMORY.md (global)")
+    print("4.4 MEMORY.md (project in an app)- unique to todos_list app")
+    print("4.5 /rules for SQLite3 statements")
+    print("4.6 VS Code terminal sessions")
     print("5. MCP servers for Google calendar, Gmail, and Github")
     print("6. Skills folder for explain-code, create-todo-list, etc")
     print("7. Hook for Claude stop notifications (in project settings.json file)")
@@ -77,6 +83,24 @@ while True:
 
     if option == 4:
         show("memoryDoc.md")
+
+    if option == 4.1:
+        show("/Users/randy/.claude/CLAUDE.md")
+
+    if option == 4.2:
+        show("CLAUDE.md")
+
+    if option == 4.3:
+        show(r"C:\Users\randy\.claude\projects\C--Users-randy-OneDrive-VisualStudioCode-Claude-Code-Tutorial\memory\MEMORY.md")
+
+    if option == 4.4:
+        show("todos_list/MEMORY.md")
+
+    if option == 4.5:
+        show(".claude/rules/sqlite3-statements.md")
+
+    if option == 4.6:
+        show("vs-code.md")
 
     if option == 5:
         show("mcp.md")
@@ -168,8 +192,6 @@ while True:
 
     if option == 22:
         show("vs-code.md")
-
-    
 
     if option == 99 or option == 0:
         break

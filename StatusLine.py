@@ -19,4 +19,4 @@ try:
 except (FileNotFoundError, subprocess.TimeoutExpired):
     pass
 
-print(f"[{model}] ${cost:.2f}{changes} - see /commit-status for details")
+print(f"[{model}] ${cost:.2f}{changes} - see /commit-status and update CLAUDE.md")

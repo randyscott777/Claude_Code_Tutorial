@@ -1,9 +1,13 @@
-# memoryDoc.md
+# Different Types of Memory
+- CLAUDE.md files at global and project and local levels
+- MEMORY.md files at global and within an app in the project
+- .claude/rules
+- VS Code terminal sessions
+
+# CLAUDE.md
 CLAUDE.md files let you give Claude Code persistent instructions that apply automatically to every session. Think of it as a briefing document Claude always reads before starting work on a project.
 
-### What is CLAUDE.md?
-
-A `CLAUDE.md` (created by you) in your project root (or home directory) is automatically loaded at the start of every Claude Code session. Use it to document things Claude should always know:
+A `CLAUDE.md` (created by you via /init) in your project root is automatically loaded at the start of every Claude Code session. Use it to document things Claude should always know:
 
 - Tech stack and architecture overview
 - Coding standards and naming conventions
@@ -55,29 +59,31 @@ Use `/memory` to view, add, or remove entries from Claude's memory files:
 > /memory
 # Opens memory files for viewing
 
-> Remember: we use Tailwind CSS v3 for all styling
+> prompt: Remember to use Tailwind CSS v3 for all styling
 # Saves this fact to memory
 
-> Forget the note about using Redux
+> prompt: Forget the note about using Redux
 # Removes that memory entry
 ```
 
-> **Best Practice:** Manually create a CLAUDE.md before starting any project. This single investment pays dividends on every future session — Claude arrives already knowing your conventions, eliminating repetitive context-setting.
+> **Best Practice:** Manually create a CLAUDE.md before starting any project via /init. This single investment pays dividends on every future session — Claude arrives already knowing your conventions, eliminating repetitive context-setting.
 
-claude /init to initially (automatically) create the CLAUDE.md file in the project root directory or to update it (after major changes)
+claude /init to initially create the CLAUDE.md file in the project root directory or to update it (after major changes)
 
 ### /memory to display:
-* if auto memory is on (turn on via ???????)
+* if auto memory is on (on by default; toggle via `/memory` command, `"autoMemoryEnabled": false` in settings.json, or env var `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`)
 * User memory in ~/.claude/CLAUDE.md
 * Project memory in ./CLAUDE.md
 * .claude\rules
 
 
-# MEMORY.md in ~/.claude/project/encoded-project-path/memory folder
-## Contents is an index to the following files:
+# MEMORY.md:
+## in ~/.claude/project/encoded-project-path/memory folder contents is an index to the following files:
 * user role - You're a Claude Code tutorial author/learner
 * Terse replies
 * Powershell preference
-## Creation and Maintenance
-* Automatically
-* and can have manual entries, done via "remember xxxx"
+* Remember my name
+* Creation and Maintenance is Automatic and can have manual entries, done via "remember xxxx"
+## in todos_list folder
+* how created
+* contents - database schema and how to run instruction

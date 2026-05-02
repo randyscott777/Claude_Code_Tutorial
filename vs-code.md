@@ -1,5 +1,9 @@
 # VS Code Info
 
+## Terminal States
+- open a past terminal session (not 'exited' via right bar)
+- open a new terminal session via menu bar
+
 ## Default Terminal
 - invoke terminal - new terminal
 - on the v dropdown on top right, choose Select Default Profile
