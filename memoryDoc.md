@@ -66,5 +66,18 @@ Use `/memory` to view, add, or remove entries from Claude's memory files:
 
 claude /init to initially (automatically) create the CLAUDE.md file in the project root directory or to update it (after major changes)
 
-claude /memory to display the contents 
+### /memory to display:
+* if auto memory is on (turn on via ???????)
+* User memory in ~/.claude/CLAUDE.md
+* Project memory in ./CLAUDE.md
+* .claude\rules
 
+
+# MEMORY.md in ~/.claude/project/encoded-project-path/memory folder
+## Contents is an index to the following files:
+* user role - You're a Claude Code tutorial author/learner
+* Terse replies
+* Powershell preference
+## Creation and Maintenance
+* Automatically
+* and can have manual entries, done via "remember xxxx"
