@@ -21,6 +21,10 @@ credentials.json
 token.json
 *.pem
 *.key
+~/.claude_routine_env
+
+# Routine log
+routine.log
 
 # Kivy / buildozer artifacts
 .buildozer/
