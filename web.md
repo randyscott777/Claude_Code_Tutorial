@@ -15,3 +15,18 @@
 * Choose the Briefing template
 * Take defaults for schedule and description
 * Run Now to test
+
+### Define 'Daily Email' routine
+* Browse to claude.ai/code/routines
+* Select Routines → Create New
+* Set schedule to **9:00 AM daily**
+* Set the repository to `Claude_Code_Tutorial`
+* Use the following prompt:
+
+```
+Send an email to randyscott777@gmail.com with:
+  Subject: Claude Code Routine
+  Body: This is invoked from Claude Code Routine and defined to use the Claude_Code_Tutorial repo.
+```
+
+* Click Run Now to test (uses Gmail MCP to create and send the email)
